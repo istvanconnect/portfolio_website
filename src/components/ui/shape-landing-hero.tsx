@@ -1,8 +1,33 @@
 "use client";
 
+import { lazy, Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import BreathingText from "@/components/fancy/text/breathing-text";
+
+const WebGLShader = lazy(() =>
+  import("@/components/ui/web-gl-shader").then((module) => ({
+    default: module.WebGLShader,
+  })),
+);
+
+function DeferredWebGLShader() {
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const timeoutId = window.setTimeout(() => setShouldLoad(true), 350);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  return shouldLoad ? (
+    <Suspense fallback={null}>
+      <WebGLShader />
+    </Suspense>
+  ) : null;
+}
 
 function ElegantShape({
   className,
@@ -75,7 +100,7 @@ function HeroGeometric({
   badge = "Independent creative partner",
   title1 = "Making Digital",
   title2 = "Matter.",
-  description = "I’m Alex — a designer and creative developer building distinct digital experiences for ambitious people and brands. Strategy, design, and technology, all working as one.",
+  description = "I’m Istvan Horvath — a designer and creative developer building distinct digital experiences for ambitious people and brands. Strategy, design, and technology, all working as one.",
   rotate = 12,
   width = 600,
   height = 140,
@@ -99,6 +124,9 @@ function HeroGeometric({
       id="top"
       className="relative flex min-h-[calc(100svh-76px)] w-full items-center justify-center overflow-hidden bg-[#101010] py-24 md:py-28"
     >
+      <div className="pointer-events-none absolute inset-0 opacity-25">
+        <DeferredWebGLShader />
+      </div>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_46%,rgba(197,255,74,0.07),transparent_58%)]" />
 
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -170,13 +198,16 @@ function HeroGeometric({
             initial="hidden"
             animate="visible"
           >
-            <h1 className="mb-7 font-display text-[clamp(3.8rem,10vw,8.8rem)] font-bold leading-[0.88] tracking-[-0.09em] md:mb-9">
+            <h1
+              aria-label={`${title1} ${title2}`}
+              className="mb-7 font-display text-[clamp(3.8rem,10vw,8.8rem)] font-bold leading-[0.88] tracking-[-0.09em] md:mb-9"
+            >
               <span className="bg-gradient-to-b from-white to-white/75 bg-clip-text text-transparent">
-                {title1}
+                <BreathingText>{title1}</BreathingText>
               </span>
               <br />
               <span className="bg-gradient-to-r from-lime-300 via-white/90 to-emerald-300 bg-clip-text text-transparent">
-                {title2}
+                <BreathingText>{title2}</BreathingText>
               </span>
             </h1>
           </motion.div>

@@ -1,41 +1,91 @@
 import { ArrowUpRight } from "lucide-react";
 
+const fieldClassName =
+  "w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5 text-sm text-foreground outline-none transition placeholder:text-white/25 focus:border-accent/60 focus:bg-white/[0.055]";
+
 export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-24 overflow-hidden px-5 pb-24 pt-28 md:px-8 md:pb-28 md:pt-36"
+      className="relative scroll-mt-24 overflow-hidden border-y border-white/10 bg-[#141414] px-5 py-24 md:px-8 md:py-32"
     >
-      <div className="pointer-events-none absolute -bottom-56 -right-40 h-[480px] w-[480px] rounded-full bg-accent/10 blur-[90px]" />
-      <div className="relative mx-auto max-w-[1220px]">
-        <span className="eyebrow">04 / Have a good one in mind?</span>
-        <h2 className="mb-12 mt-6 font-display text-[clamp(3.8rem,10vw,8.4rem)] font-bold leading-[0.88] tracking-[-0.095em]">
-          LET&apos;S MAKE
-          <br />
-          <span className="text-accent">IT HAPPEN.</span>
-        </h2>
-        <div className="flex flex-col items-start justify-between gap-8 border-t border-white/15 pt-8 md:flex-row md:items-end">
-          <div>
-            <span className="eyebrow">Start a conversation</span>
-            <a
-              className="mt-3 inline-flex items-center gap-2 border-b border-accent/50 pb-1 font-display text-2xl font-bold tracking-[-0.05em] transition hover:text-accent sm:text-3xl"
-              href="mailto:hello@yourname.studio"
-            >
-              hello@yourname.studio <ArrowUpRight className="h-5 w-5" />
-            </a>
-          </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] font-bold tracking-[0.1em] text-white/45">
-            <a className="transition hover:text-accent" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-              LINKEDIN ↗
-            </a>
-            <a className="transition hover:text-accent" href="https://www.instagram.com/" target="_blank" rel="noreferrer">
-              INSTAGRAM ↗
-            </a>
-            <a className="transition hover:text-accent" href="https://www.behance.net/" target="_blank" rel="noreferrer">
-              BEHANCE ↗
-            </a>
-          </div>
+      <div className="pointer-events-none absolute -right-40 top-1/4 h-[480px] w-[480px] rounded-full bg-accent/[0.07] blur-[100px]" />
+      <div className="relative mx-auto grid max-w-[1220px] gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div>
+          <span className="eyebrow">04 / Start a conversation</span>
+          <h2 className="mb-6 mt-6 font-display text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.9] tracking-[-0.085em]">
+            LET&apos;S MAKE
+            <br />
+            <span className="text-accent">IT HAPPEN.</span>
+          </h2>
+          <p className="max-w-md text-sm leading-7 text-white/50 sm:text-base">
+            Have an idea, a challenge, or a project in mind? Share a few details
+            and I&apos;ll get back to you.
+          </p>
         </div>
+
+        <form
+          action="https://formsubmit.co/istvan.connect@gmail.com"
+          method="POST"
+          className="space-y-5"
+        >
+          <input
+            type="hidden"
+            name="_subject"
+            value="New portfolio project inquiry"
+          />
+          <input
+            type="text"
+            name="_honey"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="block space-y-2 text-xs font-semibold text-white/65">
+              Your name
+              <input
+                className={fieldClassName}
+                type="text"
+                name="name"
+                autoComplete="name"
+                placeholder="Name"
+                required
+              />
+            </label>
+            <label className="block space-y-2 text-xs font-semibold text-white/65">
+              Email address
+              <input
+                className={fieldClassName}
+                type="email"
+                name="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </label>
+          </div>
+
+          <label className="block space-y-2 text-xs font-semibold text-white/65">
+            What are you looking to make?
+            <textarea
+              className={`${fieldClassName} min-h-36 resize-y`}
+              name="message"
+              placeholder="A little about your project, goals, and timeline..."
+              required
+              rows={5}
+            />
+          </label>
+
+          <button
+            type="submit"
+            className="inline-flex items-center gap-2 rounded-full border border-accent bg-accent px-6 py-3.5 text-[11px] font-extrabold tracking-[0.08em] text-[#101010] transition hover:-translate-y-0.5 hover:bg-transparent hover:text-accent"
+          >
+            SEND INQUIRY <ArrowUpRight className="h-4 w-4" />
+          </button>
+        </form>
       </div>
     </section>
   );
